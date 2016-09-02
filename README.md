@@ -27,7 +27,7 @@
 2. Execute
 
     ````
-    ./vault server -config=sync/config.hcl
+    ./vault server -config=sync/HashicorpVault/config.hcl
     ./vault init
     ````
 3. Write down the generated tokens, which will be needed to seal/unseal the vault in the future
@@ -47,12 +47,7 @@
     ```
     ./vault audit-enable file path=./vault_audit.log
     ```
-3. Execute to enable AppRole authentication:
-
-    ```
-    ./vault auth-enable approle
-    ```
-4. Check existing secret 'folders':
+3. Check existing secret 'folders':
 
     ```
     ./vault mounts
@@ -97,7 +92,7 @@ Execute:
     curl \
         -H "X-Vault-Token: [cubbyhole token]" \
         -X GET \
-        http://192.168.0.46:8200/v1/cubbyhole/response
+        http://192.168.0.50:8200/v1/cubbyhole/response
     ```
     This will return a json containing the access token and lease renewal token.
     If returns permission denied, token either expired or compromised. Notify Vault to revoke that token and create a new one.
@@ -107,7 +102,7 @@ Execute:
     curl \
         -H "X-Vault-Token: [token]" \
         -X POST \
-        http://192.168.0.46:8200/v1/auth/token/renew-self
+        http://192.168.0.50:8200/v1/auth/token/renew-self
     ```
     Not that this is not the cubbyhole token, it is the token that was wrapped in that token.
     Lease renewal is only possible if token still valid. If expired or revoked, notify Higher Level Authority (Jenkins) and go back to step 1.
