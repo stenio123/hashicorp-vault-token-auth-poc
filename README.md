@@ -27,8 +27,18 @@
 2. Execute
 
     ````
-    ./vault server -config=sync/HashicorpVault/config.hcl
+    # This runs Vault in the background. Output is sent to nohup.out
+    nohup ./vault server -config=sync/HashicorpVault/config.hcl &
+    # Press <enter> to see the Exit 1 status code
+
+    # Using the address defined in the above configuration file
+    export VAULT_ADDR=http://0.0.0.0:8200
+
+    # Initializes unseal tokens and root access token
     ./vault init
+
+    # If you want to avoid having to type "./" before executing Vault, you can add this folder to your PATH by executing:
+    export PATH=$PATH:`pwd`
     ````
 3. Write down the generated tokens, which will be needed to seal/unseal the vault in the future
 4. Execute this command three times, entering one of the provided tokens:
